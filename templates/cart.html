@@ -1,0 +1,502 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% load static %}
+
+
+{% block title %}
+
+سبد من | NovaMobile
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<main class="page">
+
+
+    <!-- =========================
+         BREADCRUMB
+    ========================= -->
+
+    <div class="breadcrumb">
+
+        صفحه اصلی ← سبد من
+
+    </div>
+
+
+
+    <!-- =========================
+         CART
+    ========================= -->
+
+    <section class="cart-section">
+
+
+        <h1 class="cart-title">
+
+            سبد من
+
+        </h1>
+
+
+
+        {% if cart_products %}
+
+
+            {% for item in cart_products %}
+
+
+                <div class="cart-item">
+
+
+                    <!-- IMAGE -->
+
+                    <div class="cart-image">
+
+                        <img
+                            src="{{ item.product.image.url }}"
+                            alt="{{ item.product.name }}"
+                        >
+
+                    </div>
+
+
+
+                    <!-- INFO -->
+
+                    <div class="cart-info">
+
+
+                        <h2>
+
+                            {{ item.product.name }}
+
+                        </h2>
+
+
+
+                        <div class="cart-specs">
+
+
+                            <div>
+
+                                <strong>
+                                    رنگ:
+                                </strong>
+
+                                {{ item.product.color }}
+
+                            </div>
+
+
+
+                            <div>
+
+                                <strong>
+                                    حافظه:
+                                </strong>
+
+                                {{ item.product.memory }}
+
+                            </div>
+
+
+
+                            <div>
+
+                                <strong>
+                                    شبکه:
+                                </strong>
+
+                                {{ item.product.network }}
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- PRICE -->
+
+                        <div class="cart-price">
+
+                            قیمت واحد:
+
+                            {{ item.product.price|intcomma }}
+
+                            تومان
+
+                        </div>
+
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="cart-quantity">
+
+                            تعداد:
+
+                            {{ item.quantity }}
+
+                        </div>
+
+
+
+                        <!-- TOTAL -->
+
+                        <div class="cart-item-total">
+
+                            قیمت کل:
+
+                            {{ item.item_total|intcomma }}
+
+                            تومان
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+
+            <!-- =========================
+                 TOTAL
+            ========================= -->
+
+            <div class="cart-total">
+
+
+                <span>
+
+                    مجموع سبد خرید:
+
+                </span>
+
+
+                <strong>
+
+                    {{ total_price|intcomma }}
+
+                    تومان
+
+                </strong>
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =========================
+                 EMPTY CART
+            ========================= -->
+
+            <div class="empty-cart">
+
+                <h2>
+
+                    سبد خرید شما خالی است
+
+                </h2>
+
+
+                <p>
+
+                    هنوز محصولی به سبد خرید اضافه نکرده‌اید.
+
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+
+<style>
+
+
+/* =========================
+   CART
+========================= */
+
+.cart-section {
+
+    margin-top: 30px;
+
+}
+
+
+.cart-title {
+
+    margin-bottom: 25px;
+
+}
+
+
+
+/* =========================
+   ITEM
+========================= */
+
+.cart-item {
+
+    display: flex;
+
+    gap: 25px;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    margin-bottom: 15px;
+
+}
+
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.cart-image {
+
+    width: 180px;
+
+    min-width: 180px;
+
+    height: 180px;
+
+    background: #f8f8f8;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.cart-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+
+}
+
+
+
+/* =========================
+   INFO
+========================= */
+
+.cart-info {
+
+    flex: 1;
+
+}
+
+
+.cart-info h2 {
+
+    margin-bottom: 18px;
+
+}
+
+
+
+/* =========================
+   SPECS
+========================= */
+
+.cart-specs {
+
+    display: flex;
+
+    gap: 25px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 18px;
+
+    color: #555;
+
+}
+
+
+.cart-specs strong {
+
+    color: #222;
+
+}
+
+
+
+/* =========================
+   PRICE
+========================= */
+
+.cart-price {
+
+    margin-bottom: 10px;
+
+}
+
+
+.cart-quantity {
+
+    margin-bottom: 10px;
+
+}
+
+
+.cart-item-total {
+
+    font-weight: bold;
+
+    margin-top: 12px;
+
+}
+
+
+
+/* =========================
+   TOTAL
+========================= */
+
+.cart-total {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    margin-top: 25px;
+
+    font-size: 18px;
+
+}
+
+
+.cart-total strong {
+
+    font-size: 20px;
+
+}
+
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty-cart {
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    padding: 60px 20px;
+
+    text-align: center;
+
+}
+
+
+.empty-cart h2 {
+
+    margin-bottom: 10px;
+
+}
+
+
+.empty-cart p {
+
+    color: #777;
+
+}
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+
+    .cart-item {
+
+        flex-direction: column;
+
+    }
+
+
+    .cart-image {
+
+        width: 100%;
+
+        min-width: 100%;
+
+        height: 250px;
+
+    }
+
+
+    .cart-total {
+
+        flex-direction: column;
+
+        gap: 10px;
+
+    }
+
+}
+
+
+</style>
+
+
+{% endblock %}

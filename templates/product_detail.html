@@ -1,0 +1,889 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}
+{{ post.name }} | NovaMobile
+{% endblock %}
+
+
+{% block content %}
+
+<main class="page">
+
+
+<!-- =========================
+     BREADCRUMB
+========================= -->
+
+<div class="breadcrumb">
+
+    صفحه اصلی ← محصولات ←
+
+    <span>
+        {{ post.name }}
+    </span>
+
+</div>
+
+
+
+<!-- =========================
+     PRODUCT
+========================= -->
+
+<section class="product-section">
+
+
+    <div class="product-image">
+
+        <img
+            src="{{ post.image.url }}"
+            alt="{{ post.name }}"
+        >
+
+    </div>
+
+
+
+    <div class="product-info">
+
+
+        <span class="brand">
+            {% for tag in post.tags.all %}
+                <a href="{% url 'result:p' tag_name=tag.name %}">
+                    {{ tag.name }}
+                </a>
+            {% endfor %}
+        </span>
+
+
+        <h1>
+            {{ post.name }}
+        </h1>
+
+
+
+        <!-- PRICE -->
+
+        <div class="price-box">
+
+            <div class="price-label">
+                قیمت محصول
+            </div>
+
+
+            <div class="price">
+
+                {{ post.price|intcomma }}
+
+                <span class="currency">
+                    تومان
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SPECS -->
+
+        <h3 class="spec-title">
+            مشخصات محصول
+        </h3>
+
+
+        <div class="specs">
+
+
+            <div class="spec">
+
+                <strong>
+                    مدل
+                </strong>
+
+                <span>
+                    {{ post.name }}
+                </span>
+
+            </div>
+
+
+
+            <div class="spec">
+
+                <strong>
+                    رنگ
+                </strong>
+
+                <span>
+                    {{ post.color }}
+                </span>
+
+            </div>
+
+
+
+            <div class="spec">
+
+                <strong>
+                    حافظه
+                </strong>
+
+                <span>
+                    {{ post.memory }}
+                </span>
+
+            </div>
+
+
+
+            <div class="spec">
+
+                <strong>
+                    شبکه
+                </strong>
+
+                <span>
+                    {{ post.network }}
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- BUY -->
+
+        <div class="buy-section">
+
+            <form
+                method="POST"
+                action="{% url 'result:cart_add' post.id %}"
+            >
+
+                {% csrf_token %}
+
+                <input
+                    class="quantity"
+                    type="number"
+                    name="quantity"
+                    value="1"
+                    min="1"
+                >
+
+
+                <button
+                    type="submit"
+                    class="buy-button"
+                >
+
+                    افزودن به سبد خرید
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+
+
+<!-- =========================
+     DETAILS
+========================= -->
+
+<section class="details">
+
+
+    <h2>
+        معرفی و توضیحات محصول
+    </h2>
+
+
+    <p>
+
+        {{ post.context }}
+
+    </p>
+
+
+</section>
+
+
+
+
+
+<!-- =========================
+     COMMENTS
+========================= -->
+
+<section class="comments">
+
+
+    <h2>
+
+        نظرات کاربران : {{ comment|length }}
+
+    </h2>
+
+
+
+    <!-- =========================
+         DJANGO MESSAGES
+    ========================= -->
+
+    {% if messages %}
+
+        <div class="django-messages">
+
+            {% for message in messages %}
+
+                <div class="django-message {{ message.tags }}">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+
+
+
+    <!-- =========================
+         COMMENTS LIST
+========================= -->
+
+    {% if comment %}
+
+
+        {% for item in comment %}
+
+            <div class="comment">
+
+
+                <div class="comment-header">
+
+
+                    <span class="comment-user">
+
+                        {{ item.author.username }}
+
+                    </span>
+
+
+
+                    <span class="comment-date">
+
+                        {{ item.created_at|naturaltime }}
+
+                    </span>
+
+
+                </div>
+
+
+
+                <p>
+
+                    {{ item.message }}
+
+                </p>
+
+
+            </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <div class="no-comment">
+
+            هنوز نظری برای این محصول ثبت نشده است.
+
+        </div>
+
+
+    {% endif %}
+
+
+
+
+
+    <!-- =========================
+         COMMENT FORM
+    ========================= -->
+
+    <div class="comment-form">
+
+
+        <h3>
+            ثبت نظر
+        </h3>
+
+
+
+        {% if request.user.is_authenticated %}
+
+
+            <!-- =========================
+                 LOGGED IN USER
+            ========================= -->
+
+            <div class="logged-user">
+
+
+                <span>
+                    ثبت نظر با نام:
+                </span>
+
+
+                <strong>
+
+                    {{ request.user.username }}
+
+                </strong>
+
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form
+                method="POST"
+                action=""
+            >
+
+
+                {% csrf_token %}
+
+
+
+                <div class="form-field">
+
+
+                    <label for="id_message">
+
+                        نظر شما
+
+                    </label>
+
+
+
+                    <textarea
+                        id="id_message"
+                        name="message"
+                        placeholder="نظر خود را درباره این محصول بنویسید..."
+                        rows="6"
+                        required
+                    ></textarea>
+
+
+                </div>
+
+
+
+                <!-- FORM ERRORS -->
+
+                {% if form.message.errors %}
+
+                    <div class="form-error">
+
+                        {{ form.message.errors }}
+
+                    </div>
+
+                {% endif %}
+
+
+
+                <button
+                    type="submit"
+                    class="comment-submit"
+                >
+
+                    ارسال نظر
+
+                </button>
+
+
+            </form>
+
+
+
+        {% else %}
+
+
+            <!-- =========================
+                 NOT LOGGED IN
+            ========================= -->
+
+            <div class="login-required">
+
+
+                <p>
+
+                    ابتدا وارد حساب کاربری خود شوید
+                    تا بتوانید درباره این محصول نظر ثبت کنید.
+
+                </p>
+
+
+
+                <a
+                    href="{% url 'Accounts:login' %}?next={{ request.path }}"
+                    class="login-button"
+                >
+
+                    ورود به حساب کاربری
+
+                </a>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</section>
+
+
+</main>
+
+
+
+
+
+<!-- =========================
+     COMMENT STYLE
+========================= -->
+
+<style>
+
+
+/* =========================
+   COMMENTS
+========================= */
+
+.comments {
+
+    margin-top: 40px;
+
+}
+
+
+.comments h2 {
+
+    margin-bottom: 25px;
+
+}
+
+
+
+
+
+/* =========================
+   COMMENT
+========================= */
+
+.comment {
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.comment-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 12px;
+
+}
+
+
+.comment-user {
+
+    font-weight: bold;
+
+    font-size: 16px;
+
+}
+
+
+.comment-date {
+
+    color: #888;
+
+    font-size: 13px;
+
+}
+
+
+.comment p {
+
+    line-height: 2;
+
+    color: #444;
+
+    margin: 0;
+
+}
+
+
+
+
+
+/* =========================
+   NO COMMENT
+========================= */
+
+.no-comment {
+
+    padding: 20px;
+
+    background: #f8f9fa;
+
+    border-radius: 12px;
+
+    color: #777;
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+
+
+
+/* =========================
+   COMMENT FORM
+========================= */
+
+.comment-form {
+
+    margin-top: 30px;
+
+    padding: 25px;
+
+    background: #f8f9fa;
+
+    border-radius: 16px;
+
+    border: 1px solid #e5e7eb;
+
+}
+
+
+.comment-form h3 {
+
+    margin-bottom: 20px;
+
+}
+
+
+
+
+
+/* =========================
+   FORM FIELD
+========================= */
+
+.form-field {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.form-field label {
+
+    font-weight: bold;
+
+}
+
+
+.form-field textarea {
+
+    width: 100%;
+
+    min-height: 130px;
+
+    padding: 15px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    resize: vertical;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+}
+
+
+.form-field textarea:focus {
+
+    border-color: #888;
+
+}
+
+
+
+
+
+/* =========================
+   LOGGED USER
+========================= */
+
+.logged-user {
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    padding: 12px 15px;
+
+    margin-bottom: 15px;
+
+    color: #555;
+
+}
+
+
+.logged-user strong {
+
+    color: #222;
+
+}
+
+
+
+
+
+/* =========================
+   SUBMIT BUTTON
+========================= */
+
+.comment-submit {
+
+    margin-top: 15px;
+
+    padding: 12px 25px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #111;
+
+    color: #fff;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    transition: 0.2s;
+
+}
+
+
+.comment-submit:hover {
+
+    opacity: 0.85;
+
+}
+
+
+
+
+
+/* =========================
+   LOGIN REQUIRED
+========================= */
+
+.login-required {
+
+    text-align: center;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    padding: 30px 20px;
+
+}
+
+
+.login-icon {
+
+    font-size: 32px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.login-required h4 {
+
+    margin-bottom: 10px;
+
+    font-size: 17px;
+
+}
+
+
+.login-required p {
+
+    color: #777;
+
+    line-height: 1.9;
+
+    margin-bottom: 20px;
+
+}
+
+
+.login-button {
+
+    display: inline-block;
+
+    padding: 11px 25px;
+
+    background: #111;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    transition: 0.2s;
+
+}
+
+
+.login-button:hover {
+
+    opacity: 0.85;
+
+}
+
+
+
+
+
+/* =========================
+   DJANGO MESSAGES
+========================= */
+
+.django-messages {
+
+    margin-bottom: 20px;
+
+}
+
+
+.django-message {
+
+    padding: 13px 16px;
+
+    margin-bottom: 10px;
+
+    border-radius: 10px;
+
+    background: #fff;
+
+    border: 1px solid #ddd;
+
+    line-height: 1.8;
+
+}
+
+
+.django-message.success {
+
+    border-color: #b7dfc2;
+
+}
+
+
+.django-message.error {
+
+    border-color: #f0b7b7;
+
+}
+
+
+
+
+
+/* =========================
+   FORM ERROR
+========================= */
+
+.form-error {
+
+    color: #c62828;
+
+    margin-top: 8px;
+
+    font-size: 13px;
+
+}
+
+
+</style>
+
+
+{% endblock %}

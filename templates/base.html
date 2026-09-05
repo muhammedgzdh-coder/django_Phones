@@ -1,0 +1,493 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+
+        {% block title %}
+            Nova Mobile
+        {% endblock %}
+
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+
+    <style>
+
+        /* =========================================
+           ACCOUNT
+        ========================================= */
+
+        .account {
+
+            position: relative;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            /*
+                مهم:
+                محدوده اکانت اجازه می‌دهد
+                موس از آدمک به منو حرکت کند.
+            */
+
+            padding-bottom: 10px;
+
+        }
+
+
+        /* =========================================
+           ACCOUNT BUTTON
+        ========================================= */
+
+        .account-button {
+
+            width: 45px;
+            height: 45px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: #f1f1f1;
+
+            font-size: 22px;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        /* =========================================
+           ACCOUNT MENU
+        ========================================= */
+
+        .account-menu {
+
+            display: none;
+
+            position: absolute;
+
+            /*
+                منو دقیقاً زیر اکانت
+            */
+
+            top: calc(100% - 2px);
+
+            /*
+                وسط منو زیر آدمک
+            */
+
+            right: 50%;
+
+            transform: translateX(50%);
+
+            width: 180px;
+
+            background: white;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.20);
+
+            padding: 10px;
+
+            box-sizing: border-box;
+
+            z-index: 9999;
+
+        }
+
+
+        /* =========================================
+           SHOW MENU
+        ========================================= */
+
+        .account:hover .account-menu {
+
+            display: block;
+
+        }
+
+
+        /* =========================================
+           USERNAME
+        ========================================= */
+
+        .account-name {
+
+            padding: 10px;
+
+            border-bottom: 1px solid #ddd;
+
+            text-align: center;
+
+            color: #333;
+
+            word-break: break-word;
+
+        }
+
+
+        /* =========================================
+           LOGOUT
+        ========================================= */
+
+        .logout {
+
+            width: 100%;
+
+            border: none;
+
+            background: none;
+
+            padding: 10px;
+
+            cursor: pointer;
+
+            color: red;
+
+            font-family: inherit;
+
+            border-radius: 5px;
+
+        }
+
+
+        .logout:hover {
+
+            background: #f5f5f5;
+
+        }
+
+
+        .search-box button {
+            border: none;
+            background: #222;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        
+        .search-box button:hover {
+            background: #444;
+            transform: translateY(-1px);
+        }
+        
+        .search-box button:active {
+            transform: translateY(0);
+        }
+
+    </style>
+
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header>
+
+    <div class="header-container">
+
+
+        <!-- LOGO -->
+
+        <a
+            href="{% url 'result:home' %}"
+            class="logo"
+        >
+
+            Nova<span>Mobile</span>
+
+        </a>
+
+
+
+        <!-- NAVIGATION -->
+
+        <nav>
+
+            <a href="{% url 'result:home' %}#">
+                صفحه اصلی
+            </a>
+
+            <a href="{% url 'result:products' %}">
+                محصولات
+            </a>
+
+            <a href="{% url 'result:brands' %}">
+                برندها
+            </a>
+
+        </nav>
+
+
+
+        <!-- SEARCH -->
+
+    <div class="search-box">
+
+        <form action="{% url 'result:search' %}" method="GET">
+        
+            <input 
+                type="text"
+                name="s"
+                placeholder="جستجوی نام یا مدل گوشی..."
+            >
+        
+            <button type="submit">
+                جستجو
+            </button>
+        
+        </form>
+
+    </div>
+
+
+        <!-- HEADER ACTIONS -->
+
+        <div class="header-actions">
+
+
+          <!-- سبد خرید -->
+
+        <a
+            href="{% url 'result:cart' %}"
+            class="action-btn">
+            🛒 سبد خرید
+        </a>
+
+
+
+            {% if not request.user.is_authenticated %}
+
+
+                <!-- ثبت نام -->
+                <a href = {% url 'Accounts:signup' %}>
+                    <button class="action-btn login-btn">
+
+                    ثبت نام
+
+                    </button>
+                </a>
+
+
+                <!-- ورود -->
+                <a href = {% url 'Accounts:login' %}>
+                    <button class="action-btn login-btn">
+
+                        ورود
+
+                    </button>
+                </a>
+
+
+            {% else %}
+
+
+                <!-- =====================================
+                     ACCOUNT
+                ====================================== -->
+
+                <div class="account">
+
+
+                    <!-- آدمک -->
+
+                    <button
+                        type="button"
+                        class="account-button"
+                    >
+
+                        👤
+
+                    </button>
+
+
+
+                    <!-- =================================
+                         ACCOUNT MENU
+                    ================================== -->
+
+                    <div class="account-menu">
+
+
+                        <!-- نام کاربر -->
+
+                        <div class="account-name">
+
+                            {{ request.user.username }}
+
+                        </div>
+
+
+
+                        <!-- خروج -->
+
+                        <form
+                            action="{% url 'Accounts:logout' %}"
+                            method="post"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="logout"
+                            >
+
+                                خروج از حساب
+
+                            </button>
+
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     CONTENT
+========================================= -->
+
+{% block content %}
+
+{% endblock %}
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div class="footer-column">
+
+            <h3>
+                NovaMobile
+            </h3>
+
+            <p>
+
+                فروشگاه تخصصی گوشی موبایل با هدف
+                ارائه اطلاعات کامل و تجربه خرید
+                ساده و مطمئن.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="footer-column">
+
+            <h3>
+                دسترسی سریع
+            </h3>
+
+            <a href="{% url 'result:home' %}">
+                صفحه اصلی
+            </a>
+
+            <br>
+
+            <a href="{% url 'result:products' %}">
+                محصولات
+            </a>
+
+            <br>
+
+            <a href="{% url 'result:brands' %}">
+                برندها
+            </a>
+
+        </div>
+
+
+
+        <div class="footer-column">
+
+            <h3>
+                ارتباط با ما
+            </h3>
+
+            <p>
+                تلفن:09145035886
+            </p>
+
+            <p>
+                ایمیل: info@novamobile.ir
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="copyright">
+
+        © 2026 NovaMobile — تمامی حقوق محفوظ است.
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1049 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+{% load static %}
+{% load resulttags %}
+
+
+{% block title %}
+محصولات | NovaMobile
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+/* =====================================================
+   PRODUCTS PAGE
+   ===================================================== */
+
+.products-page {
+    width: 100%;
+}
+
+
+/* =====================================================
+   FILTER BUTTONS
+   ===================================================== */
+
+.products-page .filter-actions {
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+/* دکمه اعمال فیلتر */
+
+.products-page .apply-filter {
+    display: block;
+    width: 100%;
+    height: 42px;
+
+    padding: 0 15px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: #111827;
+    color: #ffffff;
+
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+
+    text-align: center;
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* Hover اعمال فیلتر */
+
+.products-page .apply-filter:hover {
+    background: #2563eb;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px rgba(37, 99, 235, 0.25);
+}
+
+
+/* Active */
+
+.products-page .apply-filter:active {
+    transform: translateY(0);
+
+    box-shadow:
+        0 3px 8px rgba(37, 99, 235, 0.2);
+}
+
+
+/* دکمه حذف فیلتر */
+
+.products-page .clear-filter {
+    display: block;
+    width: 100%;
+    height: 40px;
+
+    margin-top: 9px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+
+    background: #ffffff;
+    color: #6b7280;
+
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+
+    text-align: center;
+    line-height: 40px;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Hover حذف فیلتر */
+
+.products-page .clear-filter:hover {
+    background: #111827;
+
+    color: #ffffff;
+
+    border-color: #111827;
+
+    transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+   ===================================================== */
+
+.products-page .container {
+    max-width: 1400px;
+
+    margin: auto;
+
+    padding:
+        40px
+        30px
+        100px;
+}
+
+
+/* =====================================================
+   BREADCRUMB
+   ===================================================== */
+
+.products-page .breadcrumb {
+    color: #6b7280;
+
+    font-size: 12px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =====================================================
+   TITLE
+   ===================================================== */
+
+.products-page .title {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.products-page .title h1 {
+    font-size: 27px;
+
+    color: #111827;
+}
+
+.products-page .title span {
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   SHOP
+   ===================================================== */
+
+.products-page .shop {
+    display: grid;
+
+    grid-template-columns:
+        260px
+        1fr;
+
+    gap: 25px;
+}
+
+
+/* =====================================================
+   FILTER BOX
+   ===================================================== */
+
+.products-page .filters {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    padding: 25px;
+
+    height: fit-content;
+}
+
+.products-page .filters h2 {
+    font-size: 17px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =====================================================
+   FILTER
+   ===================================================== */
+
+.products-page .filter {
+    border-bottom:
+        1px solid #e5e7eb;
+
+    padding: 18px 0;
+}
+
+.products-page .filter:last-of-type {
+    border-bottom: none;
+}
+
+.products-page .filter h3 {
+    font-size: 13px;
+
+    margin-bottom: 13px;
+}
+
+.products-page .filter label {
+    display: block;
+
+    font-size: 12px;
+
+    color: #6b7280;
+
+    margin: 10px 0;
+
+    cursor: pointer;
+}
+
+.products-page .filter input {
+    margin-left: 7px;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   PRODUCTS AREA
+   ===================================================== */
+
+.products-page .products-area {
+    min-width: 0;
+}
+
+
+/* =====================================================
+   SORT
+   ===================================================== */
+
+.products-page .sort {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 8px;
+
+    padding: 15px 18px;
+
+    margin-bottom: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.products-page .sort span {
+    font-size: 12px;
+
+    color: #6b7280;
+}
+
+.products-page .sort select {
+    border:
+        1px solid #d1d5db;
+
+    padding:
+        8px
+        12px;
+
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   PRODUCTS GRID
+   ===================================================== */
+
+.products-page .products {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+/* =====================================================
+   PRODUCT CARD
+   ===================================================== */
+
+.products-page .card {
+    background: #ffffff;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius: 11px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.products-page .card:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, 0.07);
+}
+
+
+/* =====================================================
+   IMAGE
+   ===================================================== */
+
+.products-page .image {
+    height: 260px;
+
+    background: #f9fafb;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+}
+
+.products-page .image img {
+    max-width: 85%;
+
+    max-height: 220px;
+
+    object-fit: contain;
+}
+
+
+/* =====================================================
+   CARD CONTENT
+   ===================================================== */
+
+.products-page .content {
+    padding: 20px;
+}
+
+
+/* =====================================================
+   BRAND
+   ===================================================== */
+
+.products-page .brand {
+    color: #2563eb;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   PRODUCT NAME
+   ===================================================== */
+
+.products-page .content h2 {
+    font-size: 16px;
+
+    margin: 8px 0;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+   ===================================================== */
+
+.products-page .description {
+    color: #6b7280;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+
+    margin-bottom: 15px;
+}
+
+
+/* =====================================================
+   SPECS
+   ===================================================== */
+
+.products-page .specs {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-bottom: 18px;
+}
+
+.products-page .spec {
+    background: #f3f4f6;
+
+    padding:
+        6px
+        8px;
+
+    border-radius: 5px;
+
+    font-size: 9px;
+
+    color: #4b5563;
+}
+
+
+/* =====================================================
+   CARD FOOTER
+   ===================================================== */
+
+.products-page .footer-card {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-top:
+        1px solid #f0f0f0;
+
+    padding-top: 15px;
+}
+
+
+/* =====================================================
+   PRICE
+   ===================================================== */
+
+.products-page .price {
+    font-weight: bold;
+
+    font-size: 15px;
+}
+
+.products-page .currency {
+    font-size: 9px;
+
+    color: #6b7280;
+}
+
+
+/* =====================================================
+   VIEW BUTTON
+   ===================================================== */
+
+.products-page .view {
+    background: #2563eb;
+
+    color: #ffffff;
+
+    padding:
+        9px
+        13px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease;
+}
+
+.products-page .view:hover {
+    background: #1d4ed8;
+}
+
+
+/* =====================================================
+   PAGINATION
+   ===================================================== */
+
+.products-page .pagination {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-top: 40px;
+}
+
+.products-page .page-number {
+    width: 38px;
+
+    height: 38px;
+
+    border:
+        1px solid #d1d5db;
+
+    background: #ffffff;
+
+    border-radius: 6px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 12px;
+
+    text-decoration: none;
+
+    color: #111827;
+
+    transition:
+        border-color 0.2s ease,
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.products-page .page-number:hover {
+    border-color: #2563eb;
+
+    color: #2563eb;
+}
+
+.products-page .page-number.active {
+    background: #2563eb;
+
+    color: #ffffff;
+
+    border-color: #2563eb;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 1100px) {
+
+    .products-page .products {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .products-page .shop {
+        grid-template-columns: 1fr;
+    }
+
+    .products-page .products {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .products-page .products {
+        grid-template-columns: 1fr;
+    }
+
+    .products-page .container {
+        padding-left: 15px;
+
+        padding-right: 15px;
+    }
+
+    .products-page .title {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+}
+
+</style>
+
+
+<main class="products-page">
+
+    <div class="container">
+
+        <!-- =========================
+             BREADCRUMB
+        ========================== -->
+
+        <div class="breadcrumb">
+            صفحه اصلی ← محصولات
+        </div>
+
+
+        <!-- =========================
+             TITLE
+        ========================== -->
+
+        <div class="title">
+
+            <h1>
+                همه محصولات
+            </h1>
+
+            <span>
+                <h3>
+                    Phones : {{ post|length }}
+                </h3>
+            </span>
+
+        </div>
+
+
+        <!-- =========================
+             SHOP
+        ========================== -->
+
+        <div class="shop">
+
+
+            <!-- =========================
+                 FILTERS
+            ========================== -->
+
+            <aside class="filters">
+
+                <h2>
+                    فیلتر محصولات
+                </h2>
+
+
+                <form method="GET">
+
+
+                    <!-- برند -->
+
+                    <div class="filter">
+
+                        <h3>
+                            برند
+                        </h3>
+
+                        {% Tag_brands %}
+
+                    </div>
+
+
+                    <!-- حافظه -->
+
+                    <div class="filter">
+
+                        <h3>
+                            حافظه داخلی
+                        </h3>
+
+                        {% Tag_memory %}
+
+                    </div>
+
+
+                    <!-- شبکه -->
+
+                    <div class="filter">
+
+                        <h3>
+                            شبکه
+                        </h3>
+
+                        {% Tag_network %}
+
+                    </div>
+
+
+                    <!-- =========================
+                         FILTER BUTTONS
+                    ========================== -->
+
+                    <div class="filter-actions">
+
+                        <button
+                            type="submit"
+                            class="apply-filter"
+                        >
+                            اعمال فیلتر
+                        </button>
+
+
+                        <a
+                            href="{% url 'result:products' %}"
+                            class="clear-filter"
+                        >
+                            حذف فیلترها
+                        </a>
+
+                    </div>
+
+
+                </form>
+
+            </aside>
+
+
+            <!-- =========================
+                 PRODUCTS AREA
+            ========================== -->
+
+            <section class="products-area">
+
+
+                <!-- =========================
+                     SORT
+                ========================== -->
+
+                <div class="sort">
+
+                    <span>
+                        مرتب‌سازی محصولات
+                    </span>
+
+
+                    <form
+                        action=""
+                        method="GET"
+                    >
+
+                        <select
+                            name="sort"
+                            aria-label="مرتب‌سازی محصولات"
+                            onchange="this.form.submit()"
+                        >
+
+                            <option
+                                value="newest"
+
+                                {% if request.GET.sort == 'newest' %}
+                                    selected
+                                {% endif %}
+                            >
+                                جدیدترین
+                            </option>
+
+
+                            <option
+                                value="cheap"
+
+                                {% if request.GET.sort == 'cheap' %}
+                                    selected
+                                {% endif %}
+                            >
+                                ارزان‌ترین
+                            </option>
+
+
+                            <option
+                                value="expensive"
+
+                                {% if request.GET.sort == 'expensive' %}
+                                    selected
+                                {% endif %}
+                            >
+                                گران‌ترین
+                            </option>
+
+                        </select>
+
+                    </form>
+
+                </div>
+
+
+                <!-- =========================
+                     PRODUCTS
+                ========================== -->
+
+                <div class="products">
+
+
+                    {% for i in post %}
+
+
+                        <article class="card">
+
+
+                            <!-- تصویر -->
+
+                            <div class="image">
+
+                                <img
+                                    src="{{ i.image.url }}"
+                                    alt="{{ i.name }}"
+                                >
+
+                            </div>
+
+
+                            <!-- محتوا -->
+
+                            <div class="content">
+
+
+                                <!-- برند -->
+
+                                <span class="brand">
+
+                                    {% for tag in i.tags.all %}
+
+                                        {{ tag.name }}
+
+                                    {% endfor %}
+
+                                </span>
+
+
+                                <!-- نام -->
+
+                                <h2>
+                                    {{ i.name }}
+                                </h2>
+
+
+                                <!-- توضیحات -->
+
+                                <p class="description">
+
+                                    {{ i.context|truncatechars:40 }}
+
+                                </p>
+
+
+                                <!-- مشخصات -->
+
+                                <div class="specs">
+
+                                    <span class="spec">
+                                        {{ i.memory }}
+                                    </span>
+
+
+                                    <span class="spec">
+                                        {{ i.network }}
+                                    </span>
+
+                                </div>
+
+
+                                <!-- پایین کارت -->
+
+                                <div class="footer-card">
+
+
+                                    <!-- قیمت -->
+
+                                    <div class="price">
+
+                                        {{ i.price|intcomma }}
+
+                                        <span class="currency">
+                                            تومان
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- مشاهده -->
+
+                                    <a
+                                        href="{% url 'result:product_detail' id=i.id %}"
+                                        class="view"
+                                    >
+                                        مشاهده
+                                    </a>
+
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+
+                    {% empty %}
+
+
+                        <p>
+                            محصولی با این مشخصات پیدا نشد.
+                        </p>
+
+
+                    {% endfor %}
+
+
+                </div>
+
+
+                <!-- =========================
+                     PAGINATION
+                ========================== -->
+
+                {% if post.has_other_pages %}
+
+                    <nav
+                        class="pagination"
+                        aria-label="صفحه‌بندی محصولات"
+                    >
+
+
+                        <!-- قبلی -->
+
+                        {% if post.has_previous %}
+
+                            <a
+                                href="?page={{ post.previous_page_number }}{% for brand in selected_brands %}&brand={{ brand }}{% endfor %}{% for memory in selected_memories %}&memory={{ memory }}{% endfor %}{% for network in selected_networks %}&network={{ network }}{% endfor %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}"
+
+                                class="page-number"
+
+                                aria-label="صفحه قبلی"
+                            >
+                                قبلی
+                            </a>
+
+                        {% endif %}
+
+
+                        <!-- شماره صفحات -->
+
+                        {% for num in post.paginator.page_range %}
+
+
+                            {% if post.number == num %}
+
+                                <a
+                                    href="#"
+                                    class="page-number active"
+                                    aria-current="page"
+                                >
+                                    {{ num }}
+                                </a>
+
+
+                            {% else %}
+
+                                <a
+                                    href="?page={{ num }}{% for brand in selected_brands %}&brand={{ brand }}{% endfor %}{% for memory in selected_memories %}&memory={{ memory }}{% endfor %}{% for network in selected_networks %}&network={{ network }}{% endfor %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}"
+
+                                    class="page-number"
+                                >
+                                    {{ num }}
+                                </a>
+
+                            {% endif %}
+
+
+                        {% endfor %}
+
+
+                        <!-- بعدی -->
+
+                        {% if post.has_next %}
+
+                            <a
+                                href="?page={{ post.next_page_number }}{% for brand in selected_brands %}&brand={{ brand }}{% endfor %}{% for memory in selected_memories %}&memory={{ memory }}{% endfor %}{% for network in selected_networks %}&network={{ network }}{% endfor %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}"
+
+                                class="page-number"
+
+                                aria-label="صفحه بعدی"
+                            >
+                                بعدی
+                            </a>
+
+                        {% endif %}
+
+
+                    </nav>
+
+                {% endif %}
+
+
+            </section>
+
+        </div>
+
+    </div>
+
+</main>
+
+{% endblock %}

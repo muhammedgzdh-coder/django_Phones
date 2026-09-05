@@ -1,0 +1,757 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
+
+<title>ثبت نام | NovaMobile</title>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+
+    /* =========================
+       BODY
+    ========================= */
+
+    body {
+
+        min-height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: #f8fafc;
+
+        padding: 25px;
+
+    }
+
+
+    /* =========================
+       SIGNUP BOX
+    ========================= */
+
+    .signup-box {
+
+        width: 430px;
+        max-width: 100%;
+
+        padding: 42px;
+
+        background: #ffffff;
+
+        border: 1px solid #e2e8f0;
+
+        border-radius: 20px;
+
+        box-shadow:
+            0 20px 50px rgba(15, 23, 42, .10);
+
+    }
+
+
+    /* =========================
+       LOGO
+    ========================= */
+
+    .logo {
+
+        text-align: center;
+
+        margin-bottom: 30px;
+
+    }
+
+
+    .logo-icon {
+
+        width: 70px;
+        height: 70px;
+
+        margin: auto;
+
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 18px;
+
+        background: #2563eb;
+
+        color: white;
+
+        font-size: 28px;
+
+        font-weight: bold;
+
+        box-shadow:
+            0 10px 25px rgba(37, 99, 235, .25);
+
+    }
+
+
+    .logo h1 {
+
+        margin-top: 15px;
+
+        color: #0f172a;
+
+        font-size: 22px;
+
+    }
+
+
+    .logo p {
+
+        margin-top: 5px;
+
+        color: #64748b;
+
+        font-size: 13px;
+
+    }
+
+
+    /* =========================
+       TITLE
+    ========================= */
+
+    .title {
+
+        text-align: center;
+
+        color: #0f172a;
+
+        font-size: 24px;
+
+        margin-bottom: 8px;
+
+    }
+
+
+    .subtitle {
+
+        text-align: center;
+
+        color: #64748b;
+
+        font-size: 14px;
+
+        margin-bottom: 28px;
+
+    }
+
+
+    /* =========================
+       FORM ERRORS
+    ========================= */
+
+    .form-errors {
+
+        background: #fef2f2;
+
+        border: 1px solid #fecaca;
+
+        color: #dc2626;
+
+        border-radius: 10px;
+
+        padding: 12px;
+
+        margin-bottom: 20px;
+
+        font-size: 13px;
+
+        line-height: 1.8;
+
+    }
+
+
+    .field-errors {
+
+        color: #dc2626;
+
+        font-size: 12px;
+
+        margin-top: 6px;
+
+        line-height: 1.7;
+
+    }
+
+
+    /* =========================
+       INPUT
+    ========================= */
+
+    .input-group {
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .input-group label {
+
+        display: block;
+
+        color: #334155;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        margin-bottom: 8px;
+
+    }
+
+
+    .input-box {
+
+        position: relative;
+
+    }
+
+
+    .input-icon {
+
+        position: absolute;
+
+        right: 14px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        color: #64748b;
+
+        font-size: 17px;
+
+        pointer-events: none;
+
+    }
+
+
+    .input-box input {
+
+        width: 100%;
+
+        padding: 14px 45px 14px 14px;
+
+        background: #ffffff;
+
+        color: #0f172a;
+
+        border: 1px solid #cbd5e1;
+
+        border-radius: 11px;
+
+        outline: none;
+
+        font-size: 14px;
+
+        transition: .3s;
+
+    }
+
+
+    .input-box input::placeholder {
+
+        color: #94a3b8;
+
+    }
+
+
+    .input-box input:focus {
+
+        border-color: #2563eb;
+
+        box-shadow:
+            0 0 0 4px rgba(37, 99, 235, .10);
+
+    }
+
+
+    /* =========================
+       SIGNUP BUTTON
+    ========================= */
+
+    .signup-btn {
+
+        width: 100%;
+
+        padding: 14px;
+
+        border: none;
+
+        border-radius: 11px;
+
+        background: #2563eb;
+
+        color: white;
+
+        font-size: 15px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 10px 25px rgba(37, 99, 235, .20);
+
+        transition: .3s;
+
+    }
+
+
+    .signup-btn:hover {
+
+        background: #1d4ed8;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 15px 30px rgba(37, 99, 235, .25);
+
+    }
+
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    .login {
+
+        text-align: center;
+
+        margin-top: 25px;
+
+        color: #64748b;
+
+        font-size: 13px;
+
+    }
+
+
+    .login a {
+
+        color: #2563eb;
+
+        text-decoration: none;
+
+        font-weight: bold;
+
+        transition: .3s;
+
+    }
+
+
+    .login a:hover {
+
+        color: #1d4ed8;
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media(max-width: 480px) {
+
+        body {
+
+            padding: 18px;
+
+        }
+
+
+        .signup-box {
+
+            padding: 30px 22px;
+
+        }
+
+
+        .logo-icon {
+
+            width: 62px;
+
+            height: 62px;
+
+            font-size: 25px;
+
+        }
+
+
+        .logo h1 {
+
+            font-size: 20px;
+
+        }
+
+
+        .title {
+
+            font-size: 21px;
+
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="signup-box">
+
+<!-- LOGO -->
+
+<div class="logo">
+
+
+<div class="logo-icon">
+
+    N
+
+</div>
+
+
+<h1>
+
+    NovaMobile
+
+</h1>
+
+
+<p>
+
+    فروشگاه تخصصی موبایل
+
+</p>
+
+
+</div>
+
+<!-- TITLE -->
+
+<h2 class="title">
+
+
+ایجاد حساب کاربری
+
+
+</h2>
+
+<p class="subtitle">
+
+
+برای استفاده از امکانات فروشگاه ثبت نام کنید
+
+
+</p>
+
+<!-- FORM -->
+
+<form
+
+
+method="POST"
+
+action="{% url 'Accounts:signup' %}"
+
+
+>
+
+
+{% csrf_token %}
+
+
+
+<!-- FORM ERRORS -->
+
+{% if form.non_field_errors %}
+
+    <div class="form-errors">
+
+        {{ form.non_field_errors }}
+
+    </div>
+
+{% endif %}
+
+
+
+<!-- USERNAME -->
+
+<div class="input-group">
+
+    <label for="id_username">
+
+        نام کاربری
+
+    </label>
+
+
+    <div class="input-box">
+
+        <span class="input-icon">
+
+            {% comment %} 👤 {% endcomment %}
+
+        </span>
+
+
+        <input
+
+            type="text"
+
+            id="id_username"
+
+            name="username"
+
+            placeholder="نام کاربری خود را وارد کنید"
+
+            autocomplete="username"
+
+            value="{{ form.username.value|default:'' }}"
+
+            required
+
+        >
+
+    </div>
+
+
+    {% if form.username.errors %}
+
+        <div class="field-errors">
+
+            {{ form.username.errors }}
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+
+<!-- EMAIL -->
+
+<div class="input-group">
+
+    {% comment %} <label for="id_email">
+
+        ایمیل
+
+    </label> {% endcomment %}
+
+
+    {% comment %} <div class="input-box">
+
+        <span class="input-icon">
+
+            ✉
+
+        </span>
+
+
+        <input
+
+            type="email"
+
+            id="id_email"
+
+            name="email"
+
+            placeholder="ایمیل خود را وارد کنید"
+
+            autocomplete="email"
+
+            value="{{ form.email.value|default:'' }}"
+
+        >
+
+    </div> {% endcomment %}
+
+
+    {% if form.email.errors %}
+
+        <div class="field-errors">
+
+            {{ form.email.errors }}
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+
+<!-- PASSWORD -->
+
+<div class="input-group">
+
+    <label for="id_password1">
+
+        رمز عبور
+
+    </label>
+
+
+    <div class="input-box">
+
+        <span class="input-icon">
+
+            {% comment %} 🔒 {% endcomment %}
+
+        </span>
+
+
+        <input
+
+            type="password"
+
+            id="id_password1"
+
+            name="password1"
+
+            placeholder="رمز عبور خود را وارد کنید"
+
+            autocomplete="new-password"
+
+            required
+
+        >
+
+    </div>
+
+
+    {% if form.password1.errors %}
+
+        <div class="field-errors">
+
+            {{ form.password1.errors }}
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+
+<!-- PASSWORD CONFIRM -->
+
+<div class="input-group">
+
+    <label for="id_password2">
+
+        تکرار رمز عبور
+
+    </label>
+
+
+    <div class="input-box">
+
+        <span class="input-icon">
+
+            {% comment %} 🔒 {% endcomment %}
+
+        </span>
+
+
+        <input
+
+            type="password"
+
+            id="id_password2"
+
+            name="password2"
+
+            placeholder="رمز عبور را دوباره وارد کنید"
+
+            autocomplete="new-password"
+
+            required
+
+        >
+
+    </div>
+
+
+    {% if form.password2.errors %}
+
+        <div class="field-errors">
+
+            {{ form.password2.errors }}
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+
+<!-- SIGNUP BUTTON -->
+
+<button
+
+    type="submit"
+
+    class="signup-btn"
+
+>
+
+    ایجاد حساب کاربری
+
+</button>
+
+
+</form>
+
+<!-- LOGIN -->
+
+<div class="login">
+
+
+قبلاً حساب کاربری ساخته‌اید؟
+
+<a href="{% url 'Accounts:login' %}">
+
+    وارد شوید
+
+</a>
+
+
+</div>
+
+</div>
+
+</body>
+
+</html>

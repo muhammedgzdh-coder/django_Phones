@@ -1,0 +1,74 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    برندها | NovaMobile
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/brands.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="container">
+
+    <div class="breadcrumb">
+
+        صفحه اصلی ←
+
+        <span>
+            برندها
+        </span>
+
+    </div>
+
+
+    <section class="page-title">
+
+        <h1>
+            برندهای موبایل
+        </h1>
+
+        <p>
+            محصولات مورد نظر خود را بر اساس برند انتخاب کنید
+            و جدیدترین گوشی‌های هر برند را مشاهده نمایید.
+        </p>
+
+    </section>
+
+
+    <section class="brands">
+
+
+        <!-- APPLE -->
+        {% for tag in tags %}
+            <a href="{% url 'result:p' tag_name=tag.name %}" class="brand-card">
+
+                {% comment %} <div class="brand-logo">
+                    🍎
+                </div> {% endcomment %}
+
+                <h2>
+                    {{tag.name}}
+                </h2>
+
+                {% comment %} <p>
+                    مشاهده گوشی‌های {{tag.name}}
+                </p> {% endcomment %}
+
+                <span class="brand-button">
+                    مشاهده محصولات
+                </span>
+
+            </a>
+        {% endfor %}
+
+   
+    </section>
+
+</main>
+
+{% endblock %}
+ 

@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}
+Nova Mobile | فروشگاه تخصصی موبایل
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+ 
+<div class="hero-box">
+
+    <div class="hero-text">
+
+        <small>
+            فروشگاه تخصصی موبایل
+        </small>
+
+        <h1>
+
+            جدیدترین گوشی‌های هوشمند
+
+            <br>
+
+            با بهترین انتخاب
+
+        </h1>
+
+        <p>
+
+            مجموعه‌ای از جدیدترین مدل‌های گوشی موبایل
+            از برندهای معتبر دنیا، با مشخصات کامل و
+            اطلاعات دقیق محصول.
+
+        </p>
+
+        <a href="{% url 'result:products' %}" class="hero-button">
+
+            مشاهده محصولات
+
+        </a>
+
+    </div>
+
+</div>
+ 
+
+</section>
+
+<!-- =========================
+     CATEGORIES
+========================= -->
+
+<section class="section">
+
+ 
+<div class="section-title">
+
+    <h2>
+        دسته‌بندی محصولات
+    </h2>
+
+    <span>
+        انتخاب بر اساس برند
+    </span>
+
+</div>
+
+
+<div class="categories">
+
+    {% for tag in tags %}
+        <a href="{% url 'result:p' tag_name=tag.name %}" class="category">
+
+            {% comment %} <div class="category-icon">
+                🍎
+            </div> {% endcomment %}
+
+            <h3>
+                {{tag.name}}
+            </h3>
+
+            <p>
+                مشاهده محصولات {{tag.name}}
+            </p>
+
+        </a>
+    {% endfor %}
+
+
+</div>
+ 
+
+</section>
+
+<!-- =========================
+     PRODUCTS
+========================= -->
+
+<section class="section">
+
+ 
+<div class="section-title">
+
+    <h2>
+        محصولات جدید
+    </h2>
+
+    <a href="{% url 'result:products' %}"><span>
+        مشاهده همه محصولات ←
+    </span></a>
+
+</div>
+
+
+<div class="products">
+    
+
+    {% for i in post %}
+    <!-- PRODUCT 1 -->
+   
+    <article class="product-card">
+        
+        <div class="product-image">
+
+            <img
+                src="{{ i.image.url }}"
+                
+            >
+
+        </div>
+
+
+        <div class="product-content">
+
+            <span class="brand">
+                {% for tag in i.tags.all %}
+                    {{tag.name}}              
+                {% endfor %}
+            </span>
+
+            <h3>
+                {{ i.name }}
+            </h3>
+
+            <p class="description">
+
+               {{ i.context }}
+
+            </p>
+
+
+            <div class="specs">
+
+                <span class="spec">
+                    {{ i.memory }}
+                </span>
+
+                {% comment %} <span class="spec">
+                    8GB RAM
+                </span> {% endcomment %}
+
+                <span class="spec">
+                    {{ i.network }}
+                </span>
+
+            </div>
+
+
+            <div class="product-footer">
+
+                <div class="price">
+
+                    {{i.price|intcomma}}
+
+                    <span class="currency">
+                        تومان
+                    </span>
+
+                </div>
+
+                <a href="{% url 'result:product_detail' id=i.id %}" class="buy-button">
+                    مشاهده
+                </a>
+
+            </div>
+        
+        </div>
+    
+    </article>
+
+
+
+    {% endfor %}
+</div>
+ 
+
+</section>
+
+{% endblock %}
