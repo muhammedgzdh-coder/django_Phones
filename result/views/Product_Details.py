@@ -42,26 +42,13 @@ def Search_Phones(request):
             for field in Phones._meta.get_fields():
 
                 if field.get_internal_type() in ['CharField', 'TextField']:
-                    query |= Q(
-                        **{f'{field.name}__icontains': result}
-                    )
+                    query |= Q(**{f'{field.name}__icontains': result})
 
             post = post.filter(query)
 
-
-
-        sort = request.GET.get('sort')
-
-        if sort == 'newest':
-            post = post.order_by('-created_date')
-        elif sort == 'oldest':
-            post = post.order_by('created_date')
-        elif sort == 'cheap':
-            post = post.order_by('price')
-        elif sort == 'expensive':
-            post = post.order_by('-price')
 
     context = {'post': post}
 
     return render(request, 'products.html', context)
 
+             
