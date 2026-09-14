@@ -16,7 +16,7 @@ admin.site.register(Phones,Phones_Admin)
 class Comment_Admin(admin.ModelAdmin):
     date_hierarchy = 'created_at'
     empty_value_display = '-empty'
-    list_display  = ('post','author','is_approved','created_at')
+    list_display  = ('post','author','is_approved','created_at','message')
     list_filter = ('author','message')
     search_fields = ['author','message']
 

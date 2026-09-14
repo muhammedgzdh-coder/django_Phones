@@ -4,7 +4,7 @@ from result.models import Phones
 register = template.Library()
 
 
-@register.inclusion_tag('tags_brands.html')
+@register.inclusion_tag('tags/tags_brands.html')
 def Tag_brands():
 
     brands = set()
@@ -15,7 +15,7 @@ def Tag_brands():
 
     return {'brands': brands}
 
-@register.inclusion_tag('tags_memory.html')
+@register.inclusion_tag('tags/tags_memory.html')
 def Tag_memory():
 
     memory = Phones.objects.values_list(
@@ -28,7 +28,7 @@ def Tag_memory():
     }
     
 
-@register.inclusion_tag('tags_network.html')
+@register.inclusion_tag('tags/tags_network.html')
 def Tag_network():
 
     Network = Phones.objects.values_list('network',flat=True).distinct()

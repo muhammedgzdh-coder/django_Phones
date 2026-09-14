@@ -29,7 +29,7 @@ def login_view(request):
 
     context = {'form': form}
     return render(
-        request,'login.html',context)
+        request,'account/login.html',context)
 
 @login_required
 def logout_view(request):
@@ -48,5 +48,5 @@ def signup(request):
     else:
         form = UserCreationForm()
     context = {'form': form}
-    return render(request, 'signup.html', context)   
+    return render(request, 'account/signup.html', context)   
 

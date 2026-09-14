@@ -69,8 +69,4 @@ def CartView(request):
 
     }
 
-    return render(
-        request,
-        'cart.html',
-        context
-    )
+    return render(request,'views_html/cart.html',context)

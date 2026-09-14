@@ -28,7 +28,7 @@ def product_detail(request, id):
 
     comment = Comment.objects.filter(post=post,is_approved=True)
     context = {'post': post,'comment': comment,'form': form,}
-    return render(request,'product_detail.html',context)
+    return render(request,'views_html/product_detail.html',context)
 
 
 
@@ -49,6 +49,6 @@ def Search_Phones(request):
 
     context = {'post': post}
 
-    return render(request, 'products.html', context)
+    return render(request, 'views_html/products.html', context)
 
              
