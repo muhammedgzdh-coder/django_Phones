@@ -126,7 +126,12 @@
   * `SDIFF`
   * `SINTER`
   * `SUNION`
-* آشنایی با Caching و مفهوم ذخیره‌سازی موقت داده‌ها
+ * پیاده‌سازی Cache Invalidation هنگام تغییر یا حذف داده‌ها
+ * استفاده از Django Signals (post_save و post_delete) برای پاک‌سازی خودکار Cache
+ * مدیریت تغییرات Tagها و حذف Cacheهای وابسته به محصولات و Tagها
+ * درک ارتباط بین Database → Cache → View
+ * درک چرخه Cache Miss → Query Database → ذخیره در Cache → استفاده مجدد از Cache
+ * استفاده از Redis Cache در کنار PostgreSQL برای بهبود Pe
 
 ### Project Architecture
 
@@ -147,6 +152,7 @@
 * Python
 * Django
 * PostgreSQL
+* Redis
 
 
 ##  Developer
