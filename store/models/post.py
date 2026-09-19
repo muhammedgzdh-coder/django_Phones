@@ -6,7 +6,7 @@ class Phones(models.Model):
     name = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
     tags = TaggableManager()
-    image = models.ImageField(upload_to='result/',default='result/default.jpg')
+    image = models.ImageField(upload_to='store/',default='store/default.jpg')
     context = models.TextField(max_length=225)
     status = models.BooleanField(default=True)  
     price = models.PositiveIntegerField()

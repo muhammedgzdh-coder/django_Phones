@@ -109,7 +109,7 @@
 ### Performance & Caching
 
 * آشنایی و کار با Redis
-* کار با Redis به‌عنوان Key/Value Store
+* کار با Redis به‌عنوان Key/Value store
 * کار با Redis Setها
 * عملیات پایه Redis مانند:
 

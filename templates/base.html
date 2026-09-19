@@ -227,7 +227,7 @@
         <!-- LOGO -->
 
         <a
-            href="{% url 'result:home' %}"
+            href="{% url 'store:home' %}"
             class="logo"
         >
 
@@ -241,15 +241,15 @@
 
         <nav>
 
-            <a href="{% url 'result:home' %}#">
+            <a href="{% url 'store:home' %}#">
                 صفحه اصلی
             </a>
 
-            <a href="{% url 'result:products' %}">
+            <a href="{% url 'store:products' %}">
                 محصولات
             </a>
 
-            <a href="{% url 'result:brands' %}">
+            <a href="{% url 'store:brands' %}">
                 برندها
             </a>
 
@@ -261,7 +261,7 @@
 
     <div class="search-box">
 
-        <form action="{% url 'result:search' %}" method="GET">
+        <form action="{% url 'store:search' %}" method="GET">
         
             <input 
                 type="text"
@@ -286,7 +286,7 @@
           <!-- سبد خرید -->
 
         <a 
-        href="{% url 'result:cart' %}" 
+        href="{% url 'store:cart' %}" 
         class="action-btn"
         style="display: flex; align-items: center; justify-content: center;"
         >
@@ -441,19 +441,19 @@
                 دسترسی سریع
             </h3>
 
-            <a href="{% url 'result:home' %}">
+            <a href="{% url 'store:home' %}">
                 صفحه اصلی
             </a>
 
             <br>
 
-            <a href="{% url 'result:products' %}">
+            <a href="{% url 'store:products' %}">
                 محصولات
             </a>
 
             <br>
 
-            <a href="{% url 'result:brands' %}">
+            <a href="{% url 'store:brands' %}">
                 برندها
             </a>
 
@@ -472,7 +472,7 @@
             </p>
 
             <p>
-                ایمیل: info@novamobile.ir
+              توسعه دهنده : <a href = "https://github.com/muhammedgzdh-coder">Muhammed-Agazadeh</a>
             </p>
 
         </div>

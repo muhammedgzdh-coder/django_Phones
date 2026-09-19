@@ -1,4 +1,4 @@
-from result.models import Phones
+from store.models import Phones
 
 
 def Tags(tag_name=None):

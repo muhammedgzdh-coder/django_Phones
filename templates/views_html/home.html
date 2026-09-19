@@ -39,7 +39,7 @@ Nova Mobile | فروشگاه تخصصی موبایل
 
         </p>
 
-        <a href="{% url 'result:products' %}" class="hero-button">
+        <a href="{% url 'store:products' %}" class="hero-button">
 
             مشاهده محصولات
 
@@ -75,7 +75,7 @@ Nova Mobile | فروشگاه تخصصی موبایل
 <div class="categories">
 
     {% for tag in tags %}
-        <a href="{% url 'result:p' tag_name=tag.name %}" class="category">
+        <a href="{% url 'store:p' tag_name=tag.name %}" class="category">
 
             {% comment %} <div class="category-icon">
                 🍎
@@ -111,7 +111,7 @@ Nova Mobile | فروشگاه تخصصی موبایل
         محصولات جدید
     </h2>
 
-    <a href="{% url 'result:products' %}"><span>
+    <a href="{% url 'store:products' %}"><span>
         مشاهده همه محصولات ←
     </span></a>
 
@@ -184,7 +184,7 @@ Nova Mobile | فروشگاه تخصصی موبایل
 
                 </div>
 
-                <a href="{% url 'result:product_detail' id=i.id %}" class="buy-button">
+                <a href="{% url 'store:product_detail' id=i.id %}" class="buy-button">
                     مشاهده
                 </a>
 

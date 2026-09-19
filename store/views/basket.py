@@ -1,5 +1,5 @@
 from django.shortcuts import render , redirect
-from result.models.post import Phones
+from store.models.post import Phones
 from django.shortcuts import get_object_or_404
 
 def Cart(request, id):
@@ -24,7 +24,7 @@ def Cart(request, id):
 
     request.session.modified = True
 
-    return redirect('result:cart')
+    return redirect('store:cart')
 
 
 # =========================

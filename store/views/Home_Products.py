@@ -1,7 +1,7 @@
 from django.shortcuts import render , redirect ,get_object_or_404
-from result.models.post import Phones
+from store.models.post import Phones
 from taggit.models import Tag
-from result.selector.tags import Tags 
+from store.selector.tags import Tags 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.cache import cache
 

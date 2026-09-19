@@ -1,12 +1,12 @@
 from django.shortcuts import render , redirect
-from result.models.post import Phones
+from store.models.post import Phones
 from django.shortcuts import get_object_or_404
-from result.services.comment import Save_Comment
+from store.services.comment import Save_Comment
 from django.contrib import messages
-from result.forms import FormComment
-from result.models import Comment
+from store.forms import FormComment
+from store.models import Comment
 from taggit.models import Tag
-from result.selector.tags import Tags
+from store.selector.tags import Tags
 from django.db.models import Q
 
 

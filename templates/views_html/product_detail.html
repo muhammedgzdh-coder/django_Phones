@@ -51,7 +51,7 @@
 
         <span class="brand">
             {% for tag in post.tags.all %}
-                <a href="{% url 'result:p' tag_name=tag.name %}">
+                <a href="{% url 'store:p' tag_name=tag.name %}">
                     {{ tag.name }}
                 </a>
             {% endfor %}
@@ -162,7 +162,7 @@
 
             <form
                 method="POST"
-                action="{% url 'result:cart_add' post.id %}"
+                action="{% url 'store:cart_add' post.id %}"
             >
 
                 {% csrf_token %}

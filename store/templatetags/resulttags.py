@@ -1,5 +1,5 @@
 from django import template
-from result.models import Phones
+from store.models import Phones
 
 register = template.Library()
 

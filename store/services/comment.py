@@ -1,4 +1,4 @@
-from result.forms import FormComment
+from store.forms import FormComment
 
 
 def Save_Comment(request, post):

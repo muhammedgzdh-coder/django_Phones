@@ -2,7 +2,7 @@ from django.apps import AppConfig
 
 
 class ResultConfig(AppConfig):
-    name = 'result'
+    name = 'store'
 
     def ready(self):
-        import result.signals
+        import store.signals

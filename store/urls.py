@@ -1,11 +1,11 @@
 from django.urls import path
-from result.views.Home_Products import home , products , brands 
-from result.views.basket import Cart , CartView
-from result.views.Product_Details import product_detail , Search_Phones 
+from store.views.Home_Products import home , products , brands 
+from store.views.basket import Cart , CartView
+from store.views.Product_Details import product_detail , Search_Phones 
 
 
 
-app_name = 'result'
+app_name = 'store'
 
 
 urlpatterns = [
