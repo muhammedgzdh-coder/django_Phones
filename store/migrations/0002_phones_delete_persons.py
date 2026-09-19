@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('store', '0001_initial'),
+        ('result', '0001_initial'),
     ]
 
     operations = [
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
                 ('color', models.CharField(max_length=50)),
-                ('image', models.ImageField(default='store/default.jpg', upload_to='store/')),
+                ('image', models.ImageField(default='result/default.jpg', upload_to='result/')),
                 ('context', models.TextField(max_length=225)),
                 ('status', models.BooleanField(default=True)),
                 ('memory', models.PositiveIntegerField()),
