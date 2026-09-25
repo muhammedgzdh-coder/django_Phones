@@ -21,6 +21,7 @@
 * Product filtering by different attributes
 * Product sorting
 * Pagination
+* captcha, Django Debug Toolbar, and sitemap support
 * Brand and tag filtering
 * Dynamic URLs for products and tags
 * Shopping cart
