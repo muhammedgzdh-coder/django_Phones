@@ -8,7 +8,7 @@ from django.utils.http import url_has_allowed_host_and_scheme
 def login_view(request):
 
     if request.user.is_authenticated:
-        return redirect('result:home')
+        return redirect('store:home')
     if request.method == 'POST':
         
         form = AuthenticationForm(request=request,data=request.POST)
@@ -19,7 +19,7 @@ def login_view(request):
 
             login(request, user)
 
-            return redirect('result:home')
+            return redirect('store:home')
 
         else:
             print(form.errors)
@@ -34,12 +34,12 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect('result:home')
+    return redirect('store:home')
 
 
 def signup(request):
     if request.user.is_authenticated:
-        return redirect('result:home')
+        return redirect('store:home')
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():

@@ -34,7 +34,6 @@
 
 <section class="product-section">
 
-
     <div class="product-image">
 
         <img
@@ -45,23 +44,24 @@
     </div>
 
 
-
     <div class="product-info">
 
-
         <span class="brand">
+
             {% for tag in post.tags.all %}
+
                 <a href="{% url 'store:p' tag_name=tag.name %}">
                     {{ tag.name }}
                 </a>
+
             {% endfor %}
+
         </span>
 
 
         <h1>
             {{ post.name }}
         </h1>
-
 
 
         <!-- PRICE -->
@@ -71,7 +71,6 @@
             <div class="price-label">
                 قیمت محصول
             </div>
-
 
             <div class="price">
 
@@ -86,7 +85,6 @@
         </div>
 
 
-
         <!-- SPECS -->
 
         <h3 class="spec-title">
@@ -95,7 +93,6 @@
 
 
         <div class="specs">
-
 
             <div class="spec">
 
@@ -108,7 +105,6 @@
                 </span>
 
             </div>
-
 
 
             <div class="spec">
@@ -124,7 +120,6 @@
             </div>
 
 
-
             <div class="spec">
 
                 <strong>
@@ -136,7 +131,6 @@
                 </span>
 
             </div>
-
 
 
             <div class="spec">
@@ -151,9 +145,7 @@
 
             </div>
 
-
         </div>
-
 
 
         <!-- BUY -->
@@ -175,26 +167,20 @@
                     min="1"
                 >
 
-
                 <button
                     type="submit"
                     class="buy-button"
                 >
-
                     افزودن به سبد خرید
-
                 </button>
 
             </form>
 
         </div>
 
-
     </div>
 
 </section>
-
-
 
 
 
@@ -204,22 +190,15 @@
 
 <section class="details">
 
-
     <h2>
         معرفی و توضیحات محصول
     </h2>
 
-
     <p>
-
         {{ post.context }}
-
     </p>
 
-
 </section>
-
-
 
 
 
@@ -229,13 +208,17 @@
 
 <section class="comments">
 
+    <div class="comments-title">
 
-    <h2>
+        <h2>
+            نظرات کاربران
+        </h2>
 
-        نظرات کاربران : {{ comment|length }}
+        <span class="comment-count">
+            {{ comment|length }} نظر
+        </span>
 
-    </h2>
-
+    </div>
 
 
     <!-- =========================
@@ -249,9 +232,7 @@
             {% for message in messages %}
 
                 <div class="django-message {{ message.tags }}">
-
                     {{ message }}
-
                 </div>
 
             {% endfor %}
@@ -262,29 +243,41 @@
 
 
 
-
-
     <!-- =========================
          COMMENTS LIST
 ========================= -->
 
     {% if comment %}
 
-
         {% for item in comment %}
 
             <div class="comment">
 
-
                 <div class="comment-header">
 
+                    <div class="comment-user">
 
-                    <span class="comment-user">
+                        <img
+                            src="https://i.pravatar.cc/45"
+                            class="comment-avatar"
+                            alt="avatar"
+                        >
 
-                        {{ item.author.username }}
+                        <span>
 
-                    </span>
+                            {% if item.author.username %}
 
+                                {{ item.author.username }}
+
+                            {% else %}
+
+                                کاربر حذف شده
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
 
 
                     <span class="comment-date">
@@ -293,17 +286,12 @@
 
                     </span>
 
-
                 </div>
 
 
-
                 <p>
-
                     {{ item.message }}
-
                 </p>
-
 
             </div>
 
@@ -312,31 +300,47 @@
 
     {% else %}
 
-
         <div class="no-comment">
 
-            هنوز نظری برای این محصول ثبت نشده است.
+            <div class="no-comment-icon">
+                💬
+            </div>
+
+            <strong>
+                هنوز نظری ثبت نشده است
+            </strong>
+
+            <span>
+                اولین نفری باشید که درباره این محصول نظر می‌دهد.
+            </span>
 
         </div>
-
 
     {% endif %}
 
 
 
-
-
     <!-- =========================
          COMMENT FORM
-    ========================= -->
+========================= -->
 
     <div class="comment-form">
 
+        <div class="comment-form-title">
 
-        <h3>
-            ثبت نظر
-        </h3>
+            <div>
 
+                <h3>
+                    ثبت نظر
+                </h3>
+
+                <p>
+                    تجربه خود را درباره این محصول با دیگران به اشتراک بگذارید.
+                </p>
+
+            </div>
+
+        </div>
 
 
         {% if request.user.is_authenticated %}
@@ -346,23 +350,6 @@
                  LOGGED IN USER
             ========================= -->
 
-            <div class="logged-user">
-
-
-                <span>
-                    ثبت نظر با نام:
-                </span>
-
-
-                <strong>
-
-                    {{ request.user.username }}
-
-                </strong>
-
-
-            </div>
-
 
 
             <!-- FORM -->
@@ -370,23 +357,19 @@
             <form
                 method="POST"
                 action=""
+                class="comment-form-inner"
             >
-
 
                 {% csrf_token %}
 
 
+                <!-- MESSAGE -->
 
                 <div class="form-field">
 
-
                     <label for="id_message">
-
                         نظر شما
-
                     </label>
-
-
 
                     <textarea
                         id="id_message"
@@ -396,37 +379,80 @@
                         required
                     ></textarea>
 
-
                 </div>
 
 
-
-                <!-- FORM ERRORS -->
+                <!-- MESSAGE ERRORS -->
 
                 {% if form.message.errors %}
 
                     <div class="form-error">
-
                         {{ form.message.errors }}
-
                     </div>
 
                 {% endif %}
 
 
 
+                <!-- =========================
+                     CAPTCHA
+                ========================= -->
+
+                <div class="captcha-box">
+
+                    <div class="captcha-title">
+
+                    
+                        <div>
+
+                            <strong>
+                                تأیید امنیتی
+                            </strong>
+
+                            <span>
+                                کد داخل تصویر را وارد کنید.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="captcha-content">
+
+                        {{ form.captcha }}
+
+                    </div>
+
+
+                    {% if form.captcha.errors %}
+
+                        <div class="form-error captcha-error">
+
+                            {{ form.captcha.errors }}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- SUBMIT -->
+
                 <button
                     type="submit"
                     class="comment-submit"
                 >
 
-                    ارسال نظر
+                    <span>
+                        ارسال نظر
+                    </span>
 
                 </button>
 
-
             </form>
-
 
 
         {% else %}
@@ -438,41 +464,38 @@
 
             <div class="login-required">
 
+                <div class="login-icon">
+                    🔐
+                </div>
+
+                <h4>
+                    برای ثبت نظر وارد حساب خود شوید
+                </h4>
 
                 <p>
-
-                    ابتدا وارد حساب کاربری خود شوید
-                    تا بتوانید درباره این محصول نظر ثبت کنید.
-
+                    ابتدا وارد حساب کاربری خود شوید تا بتوانید
+                    درباره این محصول نظر ثبت کنید.
                 </p>
-
 
 
                 <a
                     href="{% url 'Accounts:login' %}?next={{ request.path }}"
                     class="login-button"
                 >
-
                     ورود به حساب کاربری
-
                 </a>
-
 
             </div>
 
 
         {% endif %}
 
-
     </div>
-
 
 </section>
 
 
 </main>
-
-
 
 
 
@@ -482,25 +505,54 @@
 
 <style>
 
-
 /* =========================
-   COMMENTS
+   COMMENTS SECTION
 ========================= */
 
 .comments {
 
-    margin-top: 40px;
+    margin-top: 45px;
 
 }
 
 
-.comments h2 {
+.comments-title {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
 
     margin-bottom: 25px;
 
 }
 
 
+.comments-title h2 {
+
+    margin: 0;
+
+}
+
+
+.comment-count {
+
+    padding: 6px 12px;
+
+    background: #eef2ff;
+
+    color: #2563eb;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
 
 
 
@@ -512,13 +564,24 @@
 
     background: #fff;
 
-    border: 1px solid #e5e7eb;
+    border: 2px solid #e5e7eb;
 
     border-radius: 14px;
 
     padding: 20px;
 
     margin-bottom: 15px;
+
+    transition: 0.2s;
+
+}
+
+
+.comment:hover {
+
+    border-color: #d1d5db;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
 
 }
 
@@ -531,16 +594,39 @@
 
     align-items: center;
 
-    margin-bottom: 12px;
+    gap: 15px;
+
+    margin-bottom: 14px;
 
 }
 
 
 .comment-user {
 
-    font-weight: bold;
+    display: flex;
 
-    font-size: 16px;
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: 700;
+
+    font-size: 15px;
+
+}
+
+
+.comment-avatar {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 2px solid #f1f5f9;
 
 }
 
@@ -549,7 +635,7 @@
 
     color: #888;
 
-    font-size: 13px;
+    font-size: 12px;
 
 }
 
@@ -562,9 +648,9 @@
 
     margin: 0;
 
+    padding-right: 52px;
+
 }
-
-
 
 
 
@@ -574,11 +660,23 @@
 
 .no-comment {
 
-    padding: 20px;
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 35px 20px;
 
     background: #f8f9fa;
 
-    border-radius: 12px;
+    border: 2px dashed #d1d5db;
+
+    border-radius: 14px;
 
     color: #777;
 
@@ -589,6 +687,29 @@
 }
 
 
+.no-comment strong {
+
+    color: #444;
+
+    font-size: 15px;
+
+}
+
+
+.no-comment span {
+
+    font-size: 13px;
+
+}
+
+
+.no-comment-icon {
+
+    font-size: 28px;
+
+    margin-bottom: 5px;
+
+}
 
 
 
@@ -600,24 +721,90 @@
 
     margin-top: 30px;
 
-    padding: 25px;
+    padding: 28px;
 
     background: #f8f9fa;
 
     border-radius: 16px;
 
-    border: 1px solid #e5e7eb;
+    border: 2px solid #e5e7eb;
 
 }
 
 
-.comment-form h3 {
+.comment-form-title {
 
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 
 }
 
 
+.comment-form-title h3 {
+
+    margin: 0 0 7px;
+
+    font-size: 20px;
+
+}
+
+
+.comment-form-title p {
+
+    margin: 0;
+
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+
+}
+
+
+.comment-form-inner {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+
+/* =========================
+   LOGGED USER
+========================= */
+
+.logged-user {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    background: #fff;
+
+    border: 2px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    padding: 12px 15px;
+
+    margin-bottom: 18px;
+
+    color: #555;
+
+    font-size: 14px;
+
+}
+
+
+.logged-user strong {
+
+    color: #222;
+
+}
 
 
 
@@ -638,7 +825,9 @@
 
 .form-field label {
 
-    font-weight: bold;
+    font-weight: 700;
+
+    font-size: 14px;
 
 }
 
@@ -649,13 +838,182 @@
 
     min-height: 130px;
 
+    box-sizing: border-box;
+
     padding: 15px;
 
-    border: 1px solid #ddd;
+    border: 2px solid #d9dde3;
+
+    border-radius: 11px;
+
+    resize: vertical;
+
+    background: #fff;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.9;
+
+    outline: none;
+
+    transition: 0.2s;
+
+}
+
+
+.form-field textarea:focus {
+
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+
+}
+
+
+.form-field textarea::placeholder {
+
+    color: #aaa;
+
+}
+
+
+
+/* =========================
+   CAPTCHA
+========================= */
+
+.captcha-box {
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    background: #fff;
+
+    border: 2px solid #e5e7eb;
+
+    border-radius: 13px;
+
+}
+
+
+.captcha-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.captcha-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 38px;
+
+    height: 38px;
+
+    background: #eff6ff;
 
     border-radius: 10px;
 
-    resize: vertical;
+    font-size: 18px;
+
+}
+
+
+.captcha-title div {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+
+.captcha-title strong {
+
+    color: #222;
+
+    font-size: 14px;
+
+}
+
+
+.captcha-title span {
+
+    color: #888;
+
+    font-size: 12px;
+
+}
+
+
+.captcha-content {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+}
+
+
+/*
+    django-simple-captcha
+    ساختار HTML خودش را تولید می‌کند.
+*/
+
+.captcha-content img {
+
+    display: block;
+
+    height: 48px;
+
+    width: auto;
+
+    padding: 4px;
+
+    background: #f8f9fa;
+
+    border: 2px solid #dfe3e8;
+
+    border-radius: 8px;
+
+}
+
+
+.captcha-content input {
+
+    width: 180px;
+
+    height: 48px;
+
+    box-sizing: border-box;
+
+    padding: 0 13px;
+
+    border: 2px solid #d9dde3;
+
+    border-radius: 8px;
+
+    background: #fff;
 
     font-family: inherit;
 
@@ -663,47 +1021,50 @@
 
     outline: none;
 
-}
-
-
-.form-field textarea:focus {
-
-    border-color: #888;
+    transition: 0.2s;
 
 }
 
 
+.captcha-content input:focus {
+
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+
+}
+
+
+.captcha-content input::placeholder {
+
+    color: #aaa;
+
+}
+
+
+.captcha-error {
+
+    margin-top: 10px;
+
+}
 
 
 
 /* =========================
-   LOGGED USER
+   FORM ERROR
 ========================= */
 
-.logged-user {
+.form-error {
 
-    background: #fff;
+    color: #c62828;
 
-    border: 1px solid #e5e7eb;
+    margin-top: 8px;
 
-    border-radius: 10px;
+    font-size: 13px;
 
-    padding: 12px 15px;
-
-    margin-bottom: 15px;
-
-    color: #555;
+    line-height: 1.7;
 
 }
-
-
-.logged-user strong {
-
-    color: #222;
-
-}
-
-
 
 
 
@@ -713,15 +1074,23 @@
 
 .comment-submit {
 
-    margin-top: 15px;
+    align-self: flex-start;
 
-    padding: 12px 25px;
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: 20px;
+
+    padding: 12px 28px;
 
     border: none;
 
     border-radius: 10px;
 
-    background: #111;
+    background: #111827;
 
     color: #fff;
 
@@ -731,6 +1100,8 @@
 
     font-size: 14px;
 
+    font-weight: 600;
+
     transition: 0.2s;
 
 }
@@ -738,11 +1109,18 @@
 
 .comment-submit:hover {
 
-    opacity: 0.85;
+    background: #2563eb;
+
+    transform: translateY(-1px);
 
 }
 
 
+.comment-submit:active {
+
+    transform: translateY(0);
+
+}
 
 
 
@@ -756,18 +1134,18 @@
 
     background: #fff;
 
-    border: 1px solid #e5e7eb;
+    border: 2px solid #e5e7eb;
 
     border-radius: 14px;
 
-    padding: 30px 20px;
+    padding: 32px 20px;
 
 }
 
 
 .login-icon {
 
-    font-size: 32px;
+    font-size: 30px;
 
     margin-bottom: 10px;
 
@@ -776,9 +1154,11 @@
 
 .login-required h4 {
 
-    margin-bottom: 10px;
+    margin: 0 0 10px;
 
     font-size: 17px;
+
+    color: #222;
 
 }
 
@@ -789,7 +1169,9 @@
 
     line-height: 1.9;
 
-    margin-bottom: 20px;
+    margin: 0 0 20px;
+
+    font-size: 14px;
 
 }
 
@@ -800,7 +1182,7 @@
 
     padding: 11px 25px;
 
-    background: #111;
+    background: #111827;
 
     color: #fff;
 
@@ -810,16 +1192,16 @@
 
     transition: 0.2s;
 
+    font-size: 14px;
+
 }
 
 
 .login-button:hover {
 
-    opacity: 0.85;
+    background: #2563eb;
 
 }
-
-
 
 
 
@@ -844,9 +1226,11 @@
 
     background: #fff;
 
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
 
     line-height: 1.8;
+
+    font-size: 14px;
 
 }
 
@@ -855,6 +1239,8 @@
 
     border-color: #b7dfc2;
 
+    background: #f4fbf6;
+
 }
 
 
@@ -862,26 +1248,76 @@
 
     border-color: #f0b7b7;
 
+    background: #fff7f7;
+
 }
-
-
 
 
 
 /* =========================
-   FORM ERROR
+   RESPONSIVE
 ========================= */
 
-.form-error {
+@media (max-width: 600px) {
 
-    color: #c62828;
+    .comment-form {
 
-    margin-top: 8px;
+        padding: 20px 16px;
 
-    font-size: 13px;
+    }
+
+
+    .comment-header {
+
+        align-items: flex-start;
+
+    }
+
+
+    .comment-date {
+
+        white-space: nowrap;
+
+    }
+
+
+    .comment p {
+
+        padding-right: 0;
+
+    }
+
+
+    .captcha-content {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .captcha-content img {
+
+        width: fit-content;
+
+    }
+
+
+    .captcha-content input {
+
+        width: 100%;
+
+    }
+
+
+    .comment-submit {
+
+        width: 100%;
+
+    }
 
 }
-
 
 </style>
 

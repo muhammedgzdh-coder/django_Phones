@@ -9,7 +9,8 @@ db.sqlite3
 media/
 
 .env
-tamrin.sql
+tamrin
+tamrin.py
 .vscode/
 .idea/
 
@@ -17,4 +18,3 @@ tamrin.sql
 Thumbs.dbس
 
 *.log
-

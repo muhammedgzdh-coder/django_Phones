@@ -48,7 +48,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sitemaps',
+    'debug_toolbar',
     'taggit',
+    'captcha',
     'store',
     'Accounts',
 ]
@@ -61,6 +64,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
 
     'django.middleware.security.SecurityMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'store.middleware.RequestTimeMiddleware',
@@ -206,3 +210,7 @@ CACHES = {
         }
     }
 }
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

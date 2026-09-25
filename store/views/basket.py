@@ -4,12 +4,16 @@ from django.shortcuts import get_object_or_404
 
 def Cart(request, id):
 
+    
     product = get_object_or_404(Phones, id=id)
 
     cart = request.session.get('cart', {})
 
     quantity = int(request.POST.get('quantity', 1))
 
+    if not request.user.is_authenticated:
+        return redirect(f'/login/?next=/d/{id}/')
+    
     product_id = str(product.id)
 
     if product_id in cart:
@@ -33,6 +37,7 @@ def Cart(request, id):
 
 def CartView(request):
 
+   
     cart = request.session.get('cart', {})
 
     products = Phones.objects.filter(
