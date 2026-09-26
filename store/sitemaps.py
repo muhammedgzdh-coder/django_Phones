@@ -8,7 +8,10 @@ class PhoneSitemap(Sitemap):
     priority = 0.8
 
     def items(self):
-        return Phones.objects.all()
+        return Phones.objects.filter(status=True)
 
     def location(self, obj):
-        return f"/d/{obj.id}/"
+        return obj.get_absolute_url()
+
+    def lastmod(self, obj):
+        return obj.update_date

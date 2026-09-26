@@ -16,6 +16,6 @@ class RequestTimeMiddleware:
 
         duration = end_time - start_time
 
-        print(f"{request.path} -> {duration:.4f} seconds")
+        print(f"{request.path} -> {duration:.2f} seconds")
 
         return response

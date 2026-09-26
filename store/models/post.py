@@ -1,5 +1,7 @@
 from django.db import models
 from taggit.managers import TaggableManager
+from django.urls import reverse
+
 # Create your models here.
 
 class Phones(models.Model):
@@ -20,3 +22,6 @@ class Phones(models.Model):
     
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("store:product_detail", args=[self.id])
