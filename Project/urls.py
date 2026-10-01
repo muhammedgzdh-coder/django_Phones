@@ -19,11 +19,12 @@ from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
-from store.sitemaps import PhoneSitemap
+from store.sitemaps import PhoneSitemap , ViewSitemap
 import debug_toolbar
 
 sitemaps = {
     "phones": PhoneSitemap,
+    "products": ViewSitemap,
 }
 
 urlpatterns = [
@@ -31,7 +32,7 @@ urlpatterns = [
     path('',include('store.urls')),
     path('',include('Accounts.urls')),
     path('captcha',include('captcha.urls')),
-    path("sitemap.xml",sitemap,{"sitemaps": sitemaps},name="sitemap"),
+    path("sitemap.xml",sitemap,{"sitemaps": sitemaps ,"template_name": "custom_sitemap.xml"},name="sitemap"),
     path("__debug__/", include(debug_toolbar.urls)),
 ]
 
